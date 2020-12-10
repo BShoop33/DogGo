@@ -16,6 +16,5 @@ namespace DogGo.Models
         public string ImageUrl { get; set; }
 
         public Neighborhood Neighborhood { get; set; }
-
     }
 }
