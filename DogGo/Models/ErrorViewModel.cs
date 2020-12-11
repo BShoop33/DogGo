@@ -1,5 +1,3 @@
-using System;
-
 namespace DogGo.Models
 {
     public class ErrorViewModel
