@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using DogGo.Models;
+using System.Collections.Generic;
 
-namespace DogGo.Models
+namespace DogGo.Repositories
 {
     public interface IOwnerRepository
     {

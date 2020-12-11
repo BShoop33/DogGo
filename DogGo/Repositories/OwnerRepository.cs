@@ -1,10 +1,11 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using DogGo.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 
-namespace DogGo.Models
+namespace DogGo.Repositories
 {
-    public class OwnerRepository
+    public class OwnerRepository: IOwnerRepository
     {
         private readonly IConfiguration _config;
 
