@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using DogGo.Repositories;
 using DogGo.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace DogGo.Controllers
 {
+
+
     public class OwnersController : Controller, IOwnerRepository
     {
         private readonly IOwnerRepository _ownerRepo;
@@ -17,6 +20,10 @@ namespace DogGo.Controllers
         public List<Owner> GetAllOwners()
         {
             return _ownerRepo.GetAllOwners();
+        }
+        public Owner GetOwnerById(int id)
+        {
+            return _ownerRepo.GetOwnerById(id);
         }
 
         public ActionResult Index()
@@ -32,7 +39,6 @@ namespace DogGo.Controllers
             {
                 return NotFound();
             }
-
             return View(owner);
         }
 
@@ -53,11 +59,6 @@ namespace DogGo.Controllers
             {
                 return View();
             }
-        }
-
-        public Owner GetOwnerById(int id)
-        {
-            return _ownerRepo.GetOwnerById(id);
         }
     }
 }
