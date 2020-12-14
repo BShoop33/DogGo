@@ -6,29 +6,44 @@ using System.Collections.Generic;
 
 namespace DogGo.Controllers
 {
-
-
-    public class OwnersController : Controller, IOwnerRepository
+    public class OwnersController : Controller
     {
-        private readonly IOwnerRepository _ownerRepo;
+        private IOwnerRepository _ownerRepo;
+
 
         public OwnersController(IOwnerRepository ownerRepository)
         {
             _ownerRepo = ownerRepository;
         }
 
-        public List<Owner> GetAllOwners()
-        {
-            return _ownerRepo.GetAllOwners();
-        }
         public Owner GetOwnerById(int id)
         {
             return _ownerRepo.GetOwnerById(id);
         }
 
+        public Owner GetOwnerByEmail(string email)
+        {
+            return _ownerRepo.GetOwnerByEmail(email);
+        }
+
+        public void AddOwner(Owner owner)
+        {
+        }
+
+        public void UpdateOwner(Owner owner)
+        {
+        }
+
+        public void DeleteOwner(int ownerId)
+        {
+        }
+
+
+
+
         public ActionResult Index()
         {
-            List<Owner> owners = _ownerRepo.GetAllOwners();
+            List<Owner> owners = _ownerRepo.GetOwners();
             return View(owners);
         }
 
@@ -49,10 +64,11 @@ namespace DogGo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Owner owner)
         {
             try
             {
+                _ownerRepo.AddOwner(owner);
                 return RedirectToAction(nameof(Index));
             }
             catch
