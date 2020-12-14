@@ -91,11 +91,17 @@ namespace DogGo.Controllers
             }
         }
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int id, Owner owner)
         {
-            Owner owner = _ownerRepo.GetOwnerById(id);
-
-            return View(owner);
+            try
+            {
+                _ownerRepo.DeleteOwner(id);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View(owner);
+            }
         }
 
     }
