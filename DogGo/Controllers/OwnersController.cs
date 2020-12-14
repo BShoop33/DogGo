@@ -39,11 +39,6 @@ namespace DogGo.Controllers
         {
         }
 
-
-
-
-
-
         public void DeleteOwner(int ownerId)
         {
         }
@@ -67,9 +62,6 @@ namespace DogGo.Controllers
             }
             return View(owner);
         }
-
-
-
 
         public ActionResult Create()
         {
@@ -99,6 +91,34 @@ namespace DogGo.Controllers
                 return RedirectToAction("Index");
             }
             catch
+            {
+                return View(owner);
+            }
+        }
+
+        public ActionResult Edit(int id)
+        {
+            Owner owner = _ownerRepo.GetOwnerById(id);
+
+            if (owner == null)
+            {
+                return NotFound();
+            }
+
+            return View(owner);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, Owner owner)
+        {
+            try
+            {
+                _ownerRepo.UpdateOwner(owner);
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
             {
                 return View(owner);
             }
