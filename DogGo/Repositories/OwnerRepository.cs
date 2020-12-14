@@ -5,10 +5,11 @@ using System.Collections.Generic;
 
 namespace DogGo.Repositories
 {
-    public class OwnerRepository: IOwnerRepository
+    public class OwnerRepository : IOwnerRepository
     {
         private readonly IConfiguration _config;
 
+        // The constructor accepts an IConfiguration object as a parameter. This class comes from the ASP.NET framework and is useful for retrieving things out of the appsettings.json file like connection strings.
         public OwnerRepository(IConfiguration config)
         {
             _config = config;
@@ -44,25 +45,24 @@ namespace DogGo.Repositories
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Name = reader.GetString(reader.GetOrdinal("Name")),
-                            Email = reader.GetString(reader.GetOrdinal("Email")),
                             Address = reader.GetString(reader.GetOrdinal("Address")),
+                            NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId")),
                             Phone = reader.GetString(reader.GetOrdinal("Phone")),
                             Neighborhood = new Neighborhood()
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("NeighborhoodId")),
-                                Name = reader.GetString(reader.GetOrdinal("Neighborhood")),
+                                Name = reader.GetString(reader.GetOrdinal("Neighborhood"))
                             }
                         };
-
                         owners.Add(owner);
                     }
 
                     reader.Close();
-
                     return owners;
                 }
             }
         }
+
 
 
         public Owner GetOwnerById(int id)
@@ -70,39 +70,39 @@ namespace DogGo.Repositories
             using (SqlConnection conn = Connection)
             {
                 conn.Open();
+
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
                         SELECT Id, [Name], Email, Address, Phone, NeighborhoodId
                         FROM Owner
-                        WHERE Id = @id
-                    ";
+                        WHERE Id = @id";
 
                     cmd.Parameters.AddWithValue("@id", id);
 
                     SqlDataReader reader = cmd.ExecuteReader();
-                    
-                    Owner owner = null;
 
                     if (reader.Read())
                     {
-                        owner = new Owner
+                        Owner owner = new Owner()
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Name = reader.GetString(reader.GetOrdinal("Name")),
                             Email = reader.GetString(reader.GetOrdinal("Email")),
                             Address = reader.GetString(reader.GetOrdinal("Address")),
                             Phone = reader.GetString(reader.GetOrdinal("Phone")),
-                            NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId")),
-                        };                       
+                            NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId"))
+                        };
+
+                        reader.Close();
+                        return owner;
                     }
 
                     reader.Close();
-                    return owner;
+                    return null;
                 }
             }
         }
-
 
         public Owner GetOwnerByEmail(string email)
         {
@@ -155,7 +155,6 @@ namespace DogGo.Repositories
                     OUTPUT INSERTED.ID
                     VALUES (@name, @email, @phoneNumber, @address, @neighborhoodId);
                 ";
-
                     cmd.Parameters.AddWithValue("@name", owner.Name);
                     cmd.Parameters.AddWithValue("@email", owner.Email);
                     cmd.Parameters.AddWithValue("@phoneNumber", owner.Phone);
@@ -218,5 +217,7 @@ namespace DogGo.Repositories
                 }
             }
         }
+
+        
     }
 }
