@@ -1,6 +1,5 @@
 ﻿using DogGo.Repositories;
 using DogGo.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System;
@@ -43,10 +42,6 @@ namespace DogGo.Controllers
         {
         }
 
-
-
-
-
         public ActionResult Index()
         {
             List<Owner> owners = _ownerRepo.GetOwners();
@@ -77,20 +72,7 @@ namespace DogGo.Controllers
                 _ownerRepo.AddOwner(owner);
                 return RedirectToAction("Index");
             }
-            catch(Exception ex)
-            {
-                return View(owner);
-            }
-        }
-
-        public ActionResult Delete(int id, Owner owner)
-        {
-            try
-            {
-                _ownerRepo.DeleteOwner(id);
-                return RedirectToAction("Index");
-            }
-            catch
+            catch (Exception ex)
             {
                 return View(owner);
             }
@@ -99,12 +81,10 @@ namespace DogGo.Controllers
         public ActionResult Edit(int id)
         {
             Owner owner = _ownerRepo.GetOwnerById(id);
-
             if (owner == null)
             {
                 return NotFound();
             }
-
             return View(owner);
         }
 
@@ -124,5 +104,17 @@ namespace DogGo.Controllers
             }
         }
 
+        public ActionResult Delete(int id, Owner owner)
+        {
+            try
+            {
+                _ownerRepo.DeleteOwner(id);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                return View(owner);
+            }
+        }
     }
 }

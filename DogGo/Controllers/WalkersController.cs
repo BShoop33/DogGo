@@ -3,6 +3,7 @@ using DogGo.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System;
 
 namespace DogGo.Controllers
 {
@@ -60,7 +61,7 @@ namespace DogGo.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }
@@ -81,7 +82,7 @@ namespace DogGo.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }
@@ -102,7 +103,7 @@ namespace DogGo.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }
