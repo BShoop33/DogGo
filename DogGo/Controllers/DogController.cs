@@ -53,6 +53,8 @@ namespace DogGo.Controllers
         {
         }
 
+      
+
         /*Performs the default ActionResult implementation of the Index() method. That method creates a new list of Dog objects called 'dogs' and 
           populates it with the results returned by the GetDogs() method. Then invokes the View() method which passes the dogs object to the 
           Index.cshtml View.
@@ -153,6 +155,11 @@ namespace DogGo.Controllers
             {
                 return View(dog);
             }
+        }
+
+        public List<Dog> GetDogsByOwnerId(int ownerId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
