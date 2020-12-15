@@ -9,7 +9,9 @@ namespace DogGo.Repositories
     {
         private readonly IConfiguration _config;
 
-        // The constructor accepts an IConfiguration object as a parameter. This class comes from the ASP.NET framework and is useful for retrieving things out of the appsettings.json file like connection strings.
+        /*The constructor accepts an IConfiguration object as a parameter. This class comes from the ASP.NET framework and is useful for 
+          retrieving things out of the appsettings.json file like connection strings.
+        */
         public OwnerRepository(IConfiguration config)
         {
             _config = config;
@@ -57,21 +59,17 @@ namespace DogGo.Repositories
                         };
                         owners.Add(owner);
                     }
-
                     reader.Close();
                     return owners;
                 }
             }
         }
 
-
-
         public Owner GetOwnerById(int id)
         {
             using (SqlConnection conn = Connection)
             {
                 conn.Open();
-
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
@@ -94,11 +92,9 @@ namespace DogGo.Repositories
                             Phone = reader.GetString(reader.GetOrdinal("Phone")),
                             NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId"))
                         };
-
                         reader.Close();
                         return owner;
                     }
-
                     reader.Close();
                     return null;
                 }
@@ -110,7 +106,6 @@ namespace DogGo.Repositories
             using (SqlConnection conn = Connection)
             {
                 conn.Open();
-
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
@@ -133,11 +128,9 @@ namespace DogGo.Repositories
                             Phone = reader.GetString(reader.GetOrdinal("Phone")),
                             NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId"))
                         };
-
                         reader.Close();
                         return owner;
                     }
-
                     reader.Close();
                     return null;
                 }
@@ -174,7 +167,6 @@ namespace DogGo.Repositories
             using (SqlConnection conn = Connection)
             {
                 conn.Open();
-
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
@@ -204,7 +196,6 @@ namespace DogGo.Repositories
             using (SqlConnection conn = Connection)
             {
                 conn.Open();
-
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
@@ -218,7 +209,5 @@ namespace DogGo.Repositories
                 }
             }
         }
-
-        
     }
 }

@@ -54,7 +54,6 @@ namespace DogGo.Repositories
                         };
                         walkers.Add(walker);
                     }
-
                     reader.Close();
                     return walkers;
                 }
@@ -92,7 +91,6 @@ namespace DogGo.Repositories
                                 Name = reader.GetString(reader.GetOrdinal("Neighborhood"))
                             }
                         };
-
                         reader.Close();
                         return walker;
                     }
