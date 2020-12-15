@@ -108,5 +108,10 @@ namespace DogGo.Controllers
                 return View();
             }
         }
+
+        public List<Walker> GetWalkersInNeighborhood(int neighborhoodId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
