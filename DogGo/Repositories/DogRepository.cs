@@ -184,10 +184,6 @@ namespace DogGo.Repositories
             }
         }
 
-
-
-
-
         public List<Dog> GetDogsByOwnerId(int ownerId)
         {
             using (SqlConnection conn = Connection)

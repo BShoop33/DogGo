@@ -1,48 +1,161 @@
-﻿@model DogGo.Models.Walker
+﻿@model DogGo.Models.ViewModels.WalkerFormViewModel
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<div>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DogGo</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Owners" asp-action="Index">Owners</a>
+                    </li>
 
-<div>
-    <h4>Walker</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Neighborhood)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Neighborhood.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Neighborhood)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Neighborhood.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageUrl)
-        </dt>
-        <dd class="col-sm-10">
-            <img class="bg-info" src="@Model.ImageUrl" alt="avatar" />
-        </dd>
-    </dl>
-</div>
-<div>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Walker" asp-action="Index">Walkers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Neighborhood" asp-action="Index">Neighborhoods</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <h1>Walker Profile</h1> @*class="mb-4"*@
+    <section class="WalkerProfileContainer">
+        <img style="width:100px;float:left;margin-right:20px"
+             src="@Model.Walker.ImageUrl" />
+        <div class="WalkerProfileSubContainer">
+            <div>
+                <label class="font-weight-bold">Name:</label>
+                <span>@Model.Walker.Name</span>
+            </div>
+            <div>
+                <label class="font-weight-bold">Neighborhood:</label>
+                <span>@Model.Walker.Neighborhood</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="clearfix"></div>
+
+    <section class="WalksContainer">
+        <div class="RecentWalksContainer">
+            <h1 class="text-left">Recent Walks</h1>
+            <div class="WalksInfoContainer">
+                <div>Date</div>
+                @foreach (Walks walk in Model.Walks)
+                {
+                    <div class="card m-4" style="width: 18rem;">
+
+                        <div class="card-body">
+                            <div>
+                                <span>@walk.Date.ToShortDateString()</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div>Client</div>
+                @foreach (Owner owner in Model.Owner)
+                {
+                    <div class="card m-4" style="width: 18rem;">
+
+                        <div class="card-body">
+                            <div>
+                                <span>@owner.Name</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div>Duration</div>
+                @foreach (Walks walk in Model.Walks)
+                {
+                    <div class="card m-4" style="width: 18rem;">
+
+                        <div class="card-body">
+                            <div>
+                                <label class="font-weight-bold">Name:</label>
+                                <span>@walk.Duration</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <section class="col-lg-4 col-md-8 container mt-5">
+            <h1>Walkers Near Me</h1>
+            @*<ul class="list-group mt-4">
+                @foreach (Walker walker in Model.Walkers)
+                {
+                    <li class="list-group-item disabled" aria-disabled="true">
+                        <img src="@walker.ImageUrl" style="width:50px" />
+                        <span class="font-weight-bold ml-4">@walker.Name</span>
+                    </li>
+                }
+            </ul>*@
+        </section>
+    </section>
+
+
+
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
 </div>
+
+
+
+@*ORIGINAL CODE*@
+@*<h1>Details</h1>
+
+    <div>
+        <h4>Walker</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Walker.Id)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Walker.Id)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Walker.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Walker.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Walker.Neighborhood)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Walker.Neighborhood.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Walker.Neighborhood)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Walker.Neighborhood.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Walker.ImageUrl)
+            </dt>
+            <dd class="col-sm-10">
+                <img class="bg-info" src="@Model.Walker.ImageUrl" alt="avatar" />
+            </dd>
+        </dl>
+    </div>
+    <div>*@

@@ -6,5 +6,8 @@ namespace DogGo.Models.ViewModels
     {
         public Owner Owner { get; set; }
         public List<Neighborhood> Neighborhoods { get; set; }
+
+        public List<Neighborhood> NeighborhoodOptions {get;set;}
+        public string ErrorMessage { get; set; }
     }
 }

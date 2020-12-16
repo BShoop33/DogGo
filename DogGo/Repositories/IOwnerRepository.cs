@@ -1,4 +1,5 @@
 ﻿using DogGo.Models;
+using DogGo.Models.ViewModels;
 using System.Collections.Generic;
 
 namespace DogGo.Repositories
@@ -13,8 +14,8 @@ namespace DogGo.Repositories
 
         void AddOwner(Owner owner);
 
-        void UpdateOwner(Owner owner);
-
         void DeleteOwner(int ownerId);
+        
+        void UpdateOwner(Owner owner);
     }
 }

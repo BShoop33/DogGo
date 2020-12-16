@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System;
 using DogGo.Models.ViewModels;
+using Microsoft.AspNetCore.Http;
 
 namespace DogGo.Controllers
 {
@@ -86,27 +87,41 @@ namespace DogGo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Owner owner)
+        public ActionResult Create(OwnerFormViewModel viewModel)
         {
             try
             {
-                _ownerRepo.AddOwner(owner);
+                _ownerRepo.AddOwner(viewModel.Owner);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                return View(owner);
+                viewModel.ErrorMessage = "Something went wrong";
+                viewModel.NeighborhoodOptions = _neighborhoodRepo.GetAll();
+                return View(viewModel);
             }
         }
 
         public ActionResult Edit(int id)
         {
             Owner owner = _ownerRepo.GetOwnerById(id);
+            List<Neighborhood> neighborhoods = _neighborhoodRepo.GetAll();
+
+            OwnerFormViewModel vm = new OwnerFormViewModel()
+            {
+                Owner = owner,
+                Neighborhoods = neighborhoods
+            };
+
             if (owner == null)
             {
                 return NotFound();
             }
-            return View(owner);
+            else
+            { 
+
+            return View(vm);
+            }
         }
 
         [HttpPost]
@@ -117,7 +132,7 @@ namespace DogGo.Controllers
             {
                 _ownerRepo.UpdateOwner(owner);
 
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
