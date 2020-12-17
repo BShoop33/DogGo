@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace DogGo.Models
 {
@@ -9,12 +7,16 @@ namespace DogGo.Models
     {
         public int Id { get; set; }
 
+        [Required]
         public DateTime Date { get; set; }
 
+        [Required]
         public int Duration { get; set; }
 
+        [Required]
         public int WalkerId { get; set; }
 
+        [Required]
         public int DogId { get; set; }
     }
 }

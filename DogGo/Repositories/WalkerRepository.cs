@@ -135,7 +135,6 @@ namespace DogGo.Repositories
                     }
 
                     reader.Close();
-
                     return walkers;
                 }
             }
