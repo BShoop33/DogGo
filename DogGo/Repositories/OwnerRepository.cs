@@ -82,9 +82,11 @@ namespace DogGo.Repositories
 
                     SqlDataReader reader = cmd.ExecuteReader();
 
-                    if (reader.Read())
+
+                    Owner owner = null;
+                    while(reader.Read())
                     {
-                        Owner owner = new Owner()
+                        owner = new Owner()
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Name = reader.GetString(reader.GetOrdinal("Name")),
@@ -93,11 +95,9 @@ namespace DogGo.Repositories
                             Phone = reader.GetString(reader.GetOrdinal("Phone")),
                             NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId"))
                         };
-                        reader.Close();
-                        return owner;
                     }
                     reader.Close();
-                    return null;
+                    return owner;
                 }
             }
         }

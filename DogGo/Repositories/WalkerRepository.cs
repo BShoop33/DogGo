@@ -103,12 +103,6 @@ namespace DogGo.Repositories
             }
         }
 
-
-
-
-
-
-
         public List<Walker> GetWalkersInNeighborhood(int neighborhoodId)
         {
             using (SqlConnection conn = Connection)

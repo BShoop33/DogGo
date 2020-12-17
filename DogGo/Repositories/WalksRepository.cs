@@ -11,6 +11,7 @@ namespace DogGo.Repositories
     public class WalksRepository : IWalksRepository
     {
         private readonly IConfiguration _config;
+        private int ownerId;
 
         public WalksRepository(IConfiguration config)
         {
@@ -53,11 +54,10 @@ namespace DogGo.Repositories
                         walks.Add(walk);
                     }
                     reader.Close();
-                    
+
                     return walks;
                 }
             }
         }
-
     }
 }

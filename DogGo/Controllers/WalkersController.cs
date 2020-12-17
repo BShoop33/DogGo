@@ -8,11 +8,12 @@ using DogGo.Models.ViewModels;
 
 namespace DogGo.Controllers
 {
-    public class WalkersController : Controller, IWalkerRepository
+    public class WalkersController : Controller
     {
-        private readonly IWalkerRepository _walkerRepo;
-        private readonly IWalksRepository _walksRepo;
-        private readonly IOwnerRepository _ownerRepo;
+        private IOwnerRepository _ownerRepo;
+        private IDogRepository _dogRepo;
+        private IWalkerRepository _walkerRepo;
+        private IWalksRepository _walksRepo;
 
         public WalkersController(IWalkerRepository walkerRepository, IWalksRepository walksRepository, IOwnerRepository ownerRepository)
         {
@@ -21,37 +22,23 @@ namespace DogGo.Controllers
             _ownerRepo = ownerRepository;
         }
 
-       
-
-        public List<Walker> GetAllWalkers()
-        {
-            return _walkerRepo.GetAllWalkers();
-        }
-
-        public Walker GetWalkerById(int id)
-        {
-            return _walkerRepo.GetWalkerById(id);
-        }
-
-        // GET: WalkersController
         public ActionResult Index()
         {
             List<Walker> walkers = _walkerRepo.GetAllWalkers();
             return View(walkers);
         }
 
-        // GET: WalkersController/Details/5
         public ActionResult Details(int id)
         {
             Walker walker = _walkerRepo.GetWalkerById(id);
             List<Walks> walks = _walksRepo.GetAllWalks();
-            Owner owner = _ownerRepo.GetOwnerById(id);
+            List<Owner> owner = _ownerRepo.GetOwners();
 
             WalkerFormViewModel vm = new WalkerFormViewModel()
             {
-                Owner = owner,
                 Walker = walker,
-                Walks = walks
+                Walks = walks,
+                Owners = owner
             };
 
             if (walker == null)
@@ -60,26 +47,16 @@ namespace DogGo.Controllers
             }
             else
             {
-
                 return View(vm);
             }
-
-
-            //if (walker == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //return View(walker);
         }
 
-        // GET: WalkersController/Create
+        
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: WalkersController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -94,13 +71,11 @@ namespace DogGo.Controllers
             }
         }
 
-        // GET: WalkersController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: WalkersController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -115,13 +90,11 @@ namespace DogGo.Controllers
             }
         }
 
-        // GET: WalkersController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: WalkersController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
@@ -134,11 +107,6 @@ namespace DogGo.Controllers
             {
                 return View();
             }
-        }
-
-        public List<Walker> GetWalkersInNeighborhood(int neighborhoodId)
-        {
-            throw new NotImplementedException();
         }
     }
 }

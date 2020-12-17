@@ -39,7 +39,8 @@
                 <label asp-for="Owner.NeighborhoodId" class="control-label"></label>
                 <select asp-for="Owner.NeighborhoodId" class="form-control">
                     <option value="">Select Neighborhood</option>
-                    @foreach (Neighborhood neighborhood in Model.Neighborhoods)
+                    @foreach (Neighborhood neighborhood in Model.Neighborhood)
+                    //Model.Neighborhood
                     {
                         <option value="@neighborhood.Id">@neighborhood.Name</option>
                     }
