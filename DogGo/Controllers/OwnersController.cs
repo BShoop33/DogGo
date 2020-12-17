@@ -119,7 +119,6 @@ namespace DogGo.Controllers
             return View(vm);
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, OwnerFormViewModel viewModel)
@@ -136,7 +135,6 @@ namespace DogGo.Controllers
                 return View(viewModel);
             }
         }
-
 
         public ActionResult Delete(int id, Owner ownerParam)
         {

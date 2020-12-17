@@ -210,10 +210,5 @@ namespace DogGo.Repositories
                 }
             }
         }
-
-        public void UpdateOwner(OwnerFormViewModel viewModel)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }
