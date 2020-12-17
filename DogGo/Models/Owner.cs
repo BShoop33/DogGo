@@ -1,4 +1,6 @@
-﻿namespace DogGo.Models
+﻿using System.Collections.Generic;
+
+namespace DogGo.Models
 {
     public class Owner
     {
@@ -15,5 +17,11 @@
         public string Phone { get; set; }
 
         public Neighborhood Neighborhood { get; set; }
+
+        //public List<Neighborhood> neighborhoods {get;set;}
+
+        public List<Owner> owner { get; set; }
+
+        
     }
 }

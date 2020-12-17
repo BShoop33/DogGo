@@ -1,4 +1,4 @@
-﻿@model DogGo.Models.ViewModels.ProfileViewModel
+﻿@model DogGo.Models.ViewModels.OwnerFormViewModel
 
 @{ ViewData["Title"] = "Profile"; }
 <div>
@@ -29,7 +29,7 @@
             <h1 class="text-left">Dogs</h1>
 
             <div class="row">
-                @foreach (Dog dog in Model.Dogs)
+                @foreach (Dog dog in Model.Dog)
                 {
                     <div class="card m-4" style="width: 18rem;">
                         @if (String.IsNullOrEmpty(dog.ImageURL))
