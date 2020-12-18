@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DogGo.Models
 {
@@ -15,5 +16,7 @@ namespace DogGo.Models
         public string ImageUrl { get; set; }
 
         public Neighborhood Neighborhood { get; set; }
+
+        //public List<Walker> Walkers { get; set; }
     }
 }

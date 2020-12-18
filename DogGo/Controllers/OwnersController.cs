@@ -27,33 +27,6 @@ namespace DogGo.Controllers
             _neighborhoodRepo = neighborhoodRepo;
         }
 
-        public List<Owner> GetOwners()
-        {
-            return _ownerRepo.GetOwners();
-        }
-
-        public Owner GetOwnerById(int id)
-        {
-            return _ownerRepo.GetOwnerById(id);
-        }
-
-        public Owner GetOwnerByEmail(string email)
-        {
-            return _ownerRepo.GetOwnerByEmail(email);
-        }
-
-        public void AddOwner(Owner addOwner)
-        {
-        }
-
-        public void UpdateOwner(Owner updateOwner)
-        {
-        }
-
-        public void DeleteOwner(int ownerId)
-        {
-        }
-
         public ActionResult Index()
         {
             List<Owner> owners = _ownerRepo.GetOwners();
@@ -115,7 +88,6 @@ namespace DogGo.Controllers
                 Owner = owner,
                 Neighborhood = neighborhoods
             };
-
             return View(vm);
         }
 

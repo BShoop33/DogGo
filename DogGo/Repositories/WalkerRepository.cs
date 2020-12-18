@@ -60,6 +60,7 @@ namespace DogGo.Repositories
             }
         }
 
+
         public Walker GetWalkerById(int id)
         {
             using (SqlConnection conn = Connection)
@@ -71,15 +72,16 @@ namespace DogGo.Repositories
                         SELECT w.Id, w.[Name], w.ImageUrl, w.NeighborhoodId, n.Name AS Neighborhood
                         FROM Walker w
                         LEFT JOIN Neighborhood n ON n.Id = w.NeighborhoodId
-                    ";
+                        WHERE w.Id = @id";
 
                     cmd.Parameters.AddWithValue("@id", id);
 
                     SqlDataReader reader = cmd.ExecuteReader();
 
-                    if (reader.Read())
+                    Walker walker = null;
+                    while (reader.Read())
                     {
-                        Walker walker = new Walker
+                        walker = new Walker
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Name = reader.GetString(reader.GetOrdinal("Name")),
@@ -91,14 +93,9 @@ namespace DogGo.Repositories
                                 Name = reader.GetString(reader.GetOrdinal("Neighborhood"))
                             }
                         };
-                        reader.Close();
-                        return walker;
                     }
-                    else
-                    {
-                        reader.Close();
-                        return null;
-                    }
+                    reader.Close();
+                    return walker;
                 }
             }
         }
@@ -136,6 +133,50 @@ namespace DogGo.Repositories
 
                     reader.Close();
                     return walkers;
+                }
+            }
+        }
+
+        public void UpdateWalker(Walker walker)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                            UPDATE Walker
+                            SET 
+                                [Name] = @name, 
+                                ImageUrl = @imageUrl, 
+                                NeighborhoodId = @neighborhoodId
+                            WHERE Id = @id";
+
+                    cmd.Parameters.AddWithValue("@name", walker.Name);
+                    cmd.Parameters.AddWithValue("@imageUrl", walker.ImageUrl);
+                    cmd.Parameters.AddWithValue("@neighborhoodId", walker.NeighborhoodId);
+                    cmd.Parameters.AddWithValue("@id", walker.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void DeleteWalker(int walkerId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                            DELETE FROM Walker
+                            WHERE Id = @id
+                        ";
+
+                    cmd.Parameters.AddWithValue("@id", walkerId);
+
+                    cmd.ExecuteNonQuery();
                 }
             }
         }

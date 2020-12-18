@@ -11,15 +11,16 @@ namespace DogGo.Controllers
     public class WalkersController : Controller
     {
         private IOwnerRepository _ownerRepo;
-        private IDogRepository _dogRepo;
-        private IWalkerRepository _walkerRepo;
         private IWalksRepository _walksRepo;
+        private INeighborhoodRepository _neighborhoodRepo;
+        private IWalkerRepository _walkerRepo;
 
-        public WalkersController(IWalkerRepository walkerRepository, IWalksRepository walksRepository, IOwnerRepository ownerRepository)
+        public WalkersController(IWalkerRepository walkerRepository, IWalksRepository walksRepository, IOwnerRepository ownerRepository, INeighborhoodRepository neighborhoodRepository)
         {
             _walkerRepo = walkerRepository;
             _walksRepo = walksRepository;
             _ownerRepo = ownerRepository;
+            _neighborhoodRepo = neighborhoodRepository;
         }
 
         public ActionResult Index()
@@ -73,20 +74,31 @@ namespace DogGo.Controllers
 
         public ActionResult Edit(int id)
         {
-            return View();
+            List<Neighborhood> neighborhoods = _neighborhoodRepo.GetAll();
+            Walker walker = _walkerRepo.GetWalkerById(id);
+            WalkerFormViewModel vm = new WalkerFormViewModel()
+            {
+                Walker = walker,
+                Neighborhood = neighborhoods
+            };
+            return View(vm);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, WalkerFormViewModel vm)
         {
             try
             {
+                _walkerRepo.UpdateWalker(vm.Walker);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                return View();
+                vm.ErrorMessage = "There was an error editing the walker profile.";
+                vm.Neighborhood = _neighborhoodRepo.GetAll();
+
+                return View(vm);
             }
         }
 
