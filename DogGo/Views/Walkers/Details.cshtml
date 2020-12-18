@@ -99,20 +99,20 @@
         <section class="col-lg-4 col-md-8 container mt-5">
             <h1>Walkers Near Me</h1>
             @*<ul class="list-group mt-4">
-                @foreach (Walker walker in Model.Walkers)
-                {
-                    <li class="list-group-item disabled" aria-disabled="true">
-                        <img src="@walker.ImageUrl" style="width:50px" />
-                        <span class="font-weight-bold ml-4">@walker.Name</span>
-                    </li>
-                }
-            </ul>*@
+                    @foreach (Walker walker in Model.Walkers)
+                    {
+                        <li class="list-group-item disabled" aria-disabled="true">
+                            <img src="@walker.ImageUrl" style="width:50px" />
+                            <span class="font-weight-bold ml-4">@walker.Name</span>
+                        </li>
+                    }
+                </ul>*@
         </section>
     </section>
 
+    
 
-
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Walker.Id }) |
     <a asp-action="Index">Back to List</a>
 </div>
 

@@ -1,17 +1,13 @@
 ﻿using DogGo.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DogGo.Repositories
 {
     public class WalksRepository : IWalksRepository
     {
         private readonly IConfiguration _config;
-        private int ownerId;
 
         public WalksRepository(IConfiguration config)
         {
