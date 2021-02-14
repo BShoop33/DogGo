@@ -69,10 +69,9 @@ namespace DogGo.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT w.Id, w.[Name], w.ImageUrl, w.NeighborhoodId, n.Name AS Neighborhood
-                        FROM Walker w
-                        LEFT JOIN Neighborhood n ON n.Id = w.NeighborhoodId
-                        WHERE w.Id = @id";
+                        SELECT Id, [Name], ImageUrl, NeighborhoodId
+                        FROM Walker
+                        WHERE Id = @id";
 
                     cmd.Parameters.AddWithValue("@id", id);
 
@@ -87,11 +86,6 @@ namespace DogGo.Repositories
                             Name = reader.GetString(reader.GetOrdinal("Name")),
                             ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl")),
                             NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId")),
-                            Neighborhood = new Neighborhood()
-                            {
-                                Id = reader.GetInt32(reader.GetOrdinal("NeighborhoodId")),
-                                Name = reader.GetString(reader.GetOrdinal("Neighborhood"))
-                            }
                         };
                     }
                     reader.Close();
@@ -99,6 +93,14 @@ namespace DogGo.Repositories
                 }
             }
         }
+
+        //, n.Name AS Neighborhood
+        //LEFT JOIN Neighborhood n ON n.Id = w.NeighborhoodId
+        //Neighborhood = new Neighborhood()
+        //{
+        //    Id = reader.GetInt32(reader.GetOrdinal("NeighborhoodId")),
+        //                        Name = reader.GetString(reader.GetOrdinal("Neighborhood"))
+        //                    }
 
         public List<Walker> GetWalkersInNeighborhood(int neighborhoodId)
         {
@@ -139,7 +141,7 @@ namespace DogGo.Repositories
 
         public void UpdateWalker(Walker walker)
         {
-            using (SqlConnection conn = Connection)
+           using (SqlConnection conn = Connection)
             {
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
@@ -161,6 +163,12 @@ namespace DogGo.Repositories
                 }
             }
         }
+
+        
+
+
+
+
 
         public void DeleteWalker(int walkerId)
         {
