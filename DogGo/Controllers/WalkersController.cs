@@ -1,19 +1,23 @@
 ﻿using DogGo.Repositories;
 using DogGo.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System;
 using DogGo.Models.ViewModels;
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace DogGo.Controllers
 {
     public class WalkersController : Controller
     {
-        private IOwnerRepository _ownerRepo;
-        private IWalksRepository _walksRepo;
-        private INeighborhoodRepository _neighborhoodRepo;
         private IWalkerRepository _walkerRepo;
+        private IWalksRepository _walksRepo;
+        private IOwnerRepository _ownerRepo;
+        private INeighborhoodRepository _neighborhoodRepo;
 
         public WalkersController(IWalkerRepository walkerRepository, IWalksRepository walksRepository, IOwnerRepository ownerRepository, INeighborhoodRepository neighborhoodRepository)
         {
@@ -75,36 +79,31 @@ namespace DogGo.Controllers
         public ActionResult Edit(int id)
         {
             List<Neighborhood> neighborhoods = _neighborhoodRepo.GetAll();
-            Walker walker = _walkerRepo.GetWalkerById(id);
-            WalkerFormViewModel vm = new WalkerFormViewModel()
+            Walker Walker = _walkerRepo.GetWalkerById(id);
+            WalkerEditViewModel viewModel = new WalkerEditViewModel()
             {
-                Walker = walker,
+                Walker = Walker,
                 Neighborhood = neighborhoods
             };
-            return View(vm);
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, WalkerFormViewModel vm)
+        public ActionResult Edit(int id, WalkerEditViewModel viewModel)
         {
             try
             {
-                _walkerRepo.UpdateWalker(vm.Walker);
+                _walkerRepo.UpdateWalker(viewModel.Walker);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                vm.ErrorMessage = "There was an error editing the walker profile.";
-                vm.Neighborhood = _neighborhoodRepo.GetAll();
+                viewModel.ErrorMessage = "There was an error editing the walker profile.";
+                //viewModel.Neighborhood = _neighborhoodRepo.GetAll();
 
-                return View(vm);
+                return View(viewModel);
             }
-        }
-
-        public ActionResult Delete(int id)
-        {
-            return View();
         }
 
         [HttpPost]

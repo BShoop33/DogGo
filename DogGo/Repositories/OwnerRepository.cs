@@ -82,7 +82,6 @@ namespace DogGo.Repositories
 
                     SqlDataReader reader = cmd.ExecuteReader();
 
-
                     Owner owner = null;
                     while(reader.Read())
                     {

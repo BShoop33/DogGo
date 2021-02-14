@@ -13,7 +13,6 @@ namespace DogGo.Repositories
 
         void UpdateWalker(Walker walker);
 
-
         void DeleteWalker(int walkerId);
     }
 }
